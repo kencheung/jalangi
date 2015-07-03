@@ -19,8 +19,10 @@
 (function(module){
 
     function execSync(cmd) {
-        es = require('execSync')
-        es.run(cmd)
+        es = require('child_process').execSync; // require('execSync')
+        // es.run(cmd)
+	es.run;
+	es(cmd);
     }
 
     var stdoutCache = {};

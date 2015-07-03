@@ -37,8 +37,10 @@
             });
 
             var run = libc.system;*/
-    	    var es = require('execSync')
-            es.exec(cmd);
+    	    var es = require('child_process').execSync; // require('execSync')
+            // es.exec(cmd);
+	    es.run;
+	    es(cmd);
         }
 
         function HOP(obj, prop) {

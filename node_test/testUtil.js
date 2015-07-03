@@ -20,7 +20,7 @@ var assert = require('assert'),
     child_process = require('child_process'),
     jalangi = require('./../src/js/jalangi'),
     procUtil = require('./../src/js/utils/procUtil'),
-    path = require('path'), execSync = require('execSync');
+    path = require('path'), execSync = require('child_process').execSync; // require('execSync');
 
 var trackValuesAnalysis = path.resolve("src/js/analyses/trackallvalues/TrackValuesEngine.js");
 
@@ -55,7 +55,9 @@ function runTest(script, instScriptFile, script_args) {
     }).then(function (result) {
             checkResult(result);
             traceFile = result.traceFile;
-            execSync.run("wc -l " + traceFile);
+	    execSync.run
+            execSync("wc -l" + traceFile);
+            // execSync.run("wc -l " + traceFile);
             return jalangi.replay(traceFile);
         }).then(function (result) {
             checkResult(result);

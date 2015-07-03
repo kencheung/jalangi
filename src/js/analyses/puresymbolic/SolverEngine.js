@@ -38,8 +38,10 @@
              });
 
              var run = libc.system;*/
-            es = require('execSync')
-            es.exec(cmd);
+            es = require('child_process').execSync; // require('execSync')
+            // es.exec(cmd);
+	    es.run;
+	    es(cmd);
         }
 
         function HOP(obj, prop) {
