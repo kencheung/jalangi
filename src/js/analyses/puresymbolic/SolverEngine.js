@@ -40,19 +40,20 @@
              var run = libc.system;*/
             es = require('child_process').execSync; // require('execSync')
             // es.exec(cmd);
-	    es.run;
-	    es(cmd);
+            es.run;
+            es(cmd);
         }
 
         function HOP(obj, prop) {
             return Object.prototype.hasOwnProperty.call(obj, prop);
         }
 
-
+        // mode: "integer" / "string"
         function generateFormula(formula, mode, assignments, extra) {
             var formulaStrings = [];
             var freeVars = {}, f, allTrue = true, j, i;
 
+            // Check from the right if each formula is true 
             while (formula instanceof SymbolicBool && formula.isAnd()) {
                 f = formula.right.substitute(assignments).getFormulaString(freeVars,mode, assignments);
                 formulaStrings.push(f);
@@ -118,6 +119,7 @@
             return parseInputs(newInputs, mode);
         }
 
+        // Parse an input and return its negated solution
         function parseInputs(newInputs, mode) {
             var fd, line, tokens, key, tmp, val;
             var negatedSolution = null;
@@ -200,6 +202,7 @@
             fs.writeFileSync(TAIL_FILE_NAME,JSON.stringify(iCount),"utf8");
         };
 
+        // Generate inputs of a formula
         this.generateInputs = function(formula) {
             var newInputs, count, MAX_COUNT = 100, negatedSolution = "TRUE", extra, allTrue;
 

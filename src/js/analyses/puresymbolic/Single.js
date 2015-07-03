@@ -194,6 +194,7 @@
         return pc;
     }
 
+    // If old inputs are available, return the combination of old inputs and new inputs. Otherwise return new inputs.
     function getFullSolution(newInputs) {
         var oldInputs = J$.inputs;
         if (newInputs === undefined) {
@@ -222,6 +223,7 @@
         return tmp;
     }
 
+    // Return true / false if symbolic value is a true / false instance of SymbolicBool. Otherwise return the concrete inputs
     function simplify(val) {
         var solution = getFullSolution(getCurrentSolution());
         var concrete = val.substitute(solution);
@@ -233,6 +235,9 @@
         return concrete;
     }
 
+    // Concretize a symbolic value with path constraint
+    // val: symbolic valuegetFullSolution
+    // warn: true / false
     function makeConcrete(val, pathConstraint, warn) {
         if (!isSymbolic(val)) {
             return {concrete:val};
@@ -281,6 +286,7 @@
         }
     }
 
+    // A symbolic value at a branch is feasible if that value can be concretized with the current path constraint
     function isFeasible(val, branch) {
         var pred = makePredicate(val);
         var ret = makeConcrete(branch ? pred : pred.not(), pc.getPC(), false);
@@ -291,6 +297,7 @@
         }
     }
 
+    // Concretize a symbolic value with the current path constraint
     function concretize(val) {
         var ret = makeConcrete(val, pc.getPC(), true);
         if (ret.constraint !== undefined) {
