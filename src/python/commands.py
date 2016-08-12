@@ -93,7 +93,7 @@ def replay(f=None, jalangi=util.DEFAULT_INSTALL, analysis=None):
         return util.run_node_script(jalangi.replay_script(), "--tracefile", trace, jalangi=jalangi, savestderr=True)
         
 
-def concolic (filee, inputs, jalangi=util.DEFAULT_INSTALL):
+def concolic (filee, inputs, instrumented, jalangi=util.DEFAULT_INSTALL):
     try:
         shutil.rmtree("jalangi_tmp")
     except: pass
@@ -101,7 +101,7 @@ def concolic (filee, inputs, jalangi=util.DEFAULT_INSTALL):
     os.mkdir("jalangi_tmp/out")
     os.putenv("JALANGI_HOME", jalangi.get_home())
     os.chdir("jalangi_tmp")
-    (instrumented_f, out) = instrument(os.path.join(os.pardir,filee), jalangi=jalangi)
+    (instrumented_f, out) = instrument(os.path.join(os.pardir,filee), jalangi=jalangi) if (instrumented == "") else (instrumented, "")
     i = 0
     iters = 0
     while i <= iters and i <= inputs:

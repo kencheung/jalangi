@@ -122,12 +122,14 @@ class ConcolicCommand:
         parser = OptionParser()
         parser.add_option("-i", "--inputs", dest="inputs",
                           help="Bound on number of inputs (default 1000)", default=1000)
+        parser.add_option("--inst", "--instrumented", dest="instrumented",
+                          help="Location of the instrumented file (default none)", default="")
         (options, args) = parser.parse_args(args=params)
         if len(args) < 1:
             print "You must specify a filename"
             parser.print_help()
             sys.exit(1)
-        commands.concolic(args[0], int(options.inputs))
+        commands.concolic(args[0], int(options.inputs), options.instrumented)
 
 class SymbolicCommand:
     name = "Symbolic execution"
