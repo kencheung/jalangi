@@ -118,7 +118,7 @@ def concolic (filee, inputs, instrumented, line_range, jalangi=util.DEFAULT_INST
         print "---- Replaying {} ----".format(filee)
         print replay(jalangi=jalangi,analysis=[jalangi.concolic_analysis()])
         
-        print parse_stacktrace(str(i),instrumented_f,line_range,jalangi=jalangi)
+        print parse_stacktrace(str(iters),instrumented_f,line_range,jalangi=jalangi)
         with open(os.path.abspath(os.pardir) + '/jalangi_tmp/jalangi_stop', 'r') as myfile:
     		data=myfile.read().replace('\n', '')
     	if data == "true":
