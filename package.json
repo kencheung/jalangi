@@ -16,6 +16,7 @@
     "q": "1.1.2",
     "rewriting-proxy": "0.4.0",
     "source-map": "0.1.40",
+    "stacktrace-parser": "^0.1.4",
     "temp": "0.8.1",
     "websocket": "1.0.14"
   },

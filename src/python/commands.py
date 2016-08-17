@@ -93,7 +93,7 @@ def replay(f=None, jalangi=util.DEFAULT_INSTALL, analysis=None):
         return util.run_node_script(jalangi.replay_script(), "--tracefile", trace, jalangi=jalangi, savestderr=True)
         
 
-def concolic (filee, inputs, instrumented, jalangi=util.DEFAULT_INSTALL):
+def concolic (filee, inputs, instrumented, line_range, jalangi=util.DEFAULT_INSTALL):
     try:
         shutil.rmtree("jalangi_tmp")
     except: pass
@@ -118,6 +118,12 @@ def concolic (filee, inputs, instrumented, jalangi=util.DEFAULT_INSTALL):
         print "---- Replaying {} ----".format(filee)
         print replay(jalangi=jalangi,analysis=[jalangi.concolic_analysis()])
         
+        print parse_stacktrace(str(i),instrumented_f,line_range,jalangi=jalangi)
+        with open(os.path.abspath(os.pardir) + '/jalangi_tmp/jalangi_stop', 'r') as myfile:
+    		data=myfile.read().replace('\n', '')
+    	if data == "true":
+    		break
+
         try:
             iters = int(util.head("jalangi_tail",1)[0])
         except: pass
@@ -400,4 +406,8 @@ def rrserver(url):
     sleep(2)
     webbrowser.open(url)
     
-  
+def parse_stacktrace(iCount, instrumented_f, line_range, jalangi=util.DEFAULT_INSTALL):
+	exception = os.path.abspath(os.pardir) + "/jalangi_tmp/jalangi_exception" + iCount + ".js"
+	l = ["--exceptionfile", exception, "--instrumentedfile", instrumented_f, "--range", line_range]
+	return util.run_node_script(jalangi.parse_stacktrace(), *l, jalangi=jalangi, savestderr=True)
+

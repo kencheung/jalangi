@@ -61,6 +61,9 @@ class JalangiInstall:
     def concolic_analysis(self):
         return self.get_home() + "/src/js/analyses/concolic/SymbolicEngine.js"
 
+    def parse_stacktrace(self):
+      return self.get_home() + "/src/js/utils/StackTraceParser.js"
+
     def analyses(self):
         return os.listdir(self.get_home() + "/src/js/analyses")
 

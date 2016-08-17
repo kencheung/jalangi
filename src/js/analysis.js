@@ -43,6 +43,9 @@ window = {String:String, Array:Array, Error:Error, Number:Number, Date:Date, Boo
     var Config = sandbox.Config;
     var SMemory = sandbox.SMemory;
     var RecordReplayEngine = sandbox.RecordReplayEngine;
+    var fs = require('fs');
+    var TAIL_FILE_NAME = "jalangi_tail";
+    var EXCEPTION_FILE_NAME = "jalangi_exception";
 
 //    var Globals = (typeof sandbox.Globals === 'undefined'? require('./Globals.js'): sandbox.Globals);
 //    var Config = (typeof sandbox.Config === 'undefined'? require('./Config.js'): sandbox.Config);
@@ -578,6 +581,15 @@ window = {String:String, Array:Array, Error:Error, Number:Number, Date:Date, Boo
             // Uncaught exception
             function Ex(iid, e) {
                 exceptionVal = e;
+                var iCount;
+
+                try {
+                    iCount = JSON.parse(fs.readFileSync(TAIL_FILE_NAME, "utf8"));
+                } catch (e) {
+                    iCount = 0;
+                }
+
+                fs.writeFileSync(EXCEPTION_FILE_NAME + iCount + '.js', e.stack, "utf8");
             }
 
             // Return statement
