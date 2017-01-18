@@ -56,7 +56,7 @@ function runTest(script, instScriptFile, script_args) {
             checkResult(result);
             traceFile = result.traceFile;
 	    execSync.run
-            execSync("wc -l" + traceFile);
+            execSync("wc -l " + traceFile);
             // execSync.run("wc -l " + traceFile);
             return jalangi.replay(traceFile);
         }).then(function (result) {
